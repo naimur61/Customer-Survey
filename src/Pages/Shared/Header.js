@@ -7,7 +7,6 @@ const Header = () => {
          fontFamily: "'Philosopher', sans-serif",
          fontWeight: 700,
          color: '#0d6efd',
-         ml: '5px'
       }} >
          Online Customer Survey
       </Typography>
