@@ -2,17 +2,43 @@ import { Button, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import EastIcon from '@mui/icons-material/East';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import WestIcon from '@mui/icons-material/West';
 import Rating from '@mui/material/Rating';
 
 
 
-const Question = ({ total, question, setPage, page }) => {
+const Question = ({ total, ques, setPage, page }) => {
 
    const [value, setValue] = React.useState(2);
    const navigate = useNavigate();
-   console.log(page);
+   const [survey, setSurvey] = useState([]);
+
+
+   const type = ques?.type;
+   const question = ques?.question;
+
+   const setAnswer = () => {
+      const ans = value;
+      const newObj = [...survey, { type, question, ans }]
+      setSurvey(newObj)
+      return newObj;
+   }
+
+
+   const nextQ = () => {
+      setAnswer();
+      setPage(page + 1);
+   }
+
+
+
+   const submit = () => {
+      const newSurvey = setAnswer();
+      const string = JSON.stringify(newSurvey)
+      localStorage.setItem('survey', string)
+   }
+
 
    return (
       <>
@@ -49,7 +75,7 @@ const Question = ({ total, question, setPage, page }) => {
                      {page + 1}.
                   </Typography>
                   <Typography>
-                     {question?.question}
+                     {ques?.question}
                   </Typography>
                </Stack>
 
@@ -69,9 +95,9 @@ const Question = ({ total, question, setPage, page }) => {
                <Stack direction='row' spacing={3} mt='2.5rem' justifyContent='space-between'>
                   {page > 0 && <Button variant="contained" startIcon={<WestIcon />} onClick={() => setPage(page - 1)}>  Previous</Button>}
 
-                  {page < total - 1 && <Button variant="contained" endIcon={<EastIcon />} onClick={() => setPage(page + 1)}>Next</Button>}
+                  {page < total - 1 && <Button variant="contained" endIcon={<EastIcon />} onClick={nextQ}>Next</Button>}
 
-                  {page === total - 1 && <Button variant="contained" > Submit</Button>}
+                  {page === total - 1 && <Button variant="contained" onClick={submit}> Submit</Button>}
                </Stack>
 
             </Paper>

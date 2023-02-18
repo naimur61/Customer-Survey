@@ -11,7 +11,7 @@ const Surveys = () => {
    return (
 
       <Stack direction='column' justifyContent='center' alignItems='center' height='80vh'>
-         <Question total={questions?.length} setPage={setPage} question={questions[page]} page={page} />
+         <Question total={questions?.length} setPage={setPage} ques={questions[page]} page={page} />
       </Stack>
    );
 };
