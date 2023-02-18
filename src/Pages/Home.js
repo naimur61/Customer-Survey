@@ -13,7 +13,7 @@ const Home = () => {
             <Typography variant='h3' sx={{
                fontWeight: { xs: 500, md: 600 }
             }}>
-               Take a Surveys
+               Take a Survey
             </Typography>
             <Typography variant='h4'>
                <BsCheckCircleFill style={{ color: "#0d6efd", }} />
