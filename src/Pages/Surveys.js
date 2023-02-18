@@ -1,9 +1,9 @@
-import { Stack } from '@mui/material';
+import { Paper, Stack, TextField, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import Question from './Shared/Question';
 
 const Surveys = () => {
-
    const [page, setPage] = useState(0);
 
 
@@ -11,7 +11,35 @@ const Surveys = () => {
    return (
 
       <Stack direction='column' justifyContent='center' alignItems='center' height='80vh'>
-         <Question total={questions?.length} setPage={setPage} ques={questions[page]} page={page} />
+
+
+         <Box
+            sx={{
+               display: 'flex',
+               flexWrap: 'wrap',
+               '& > :not(style)': {
+                  m: 1,
+                  width: { xs: '15rem', md: '30rem' },
+                  height: '15rem',
+
+               },
+               wordWrap: 'break-word'
+            }}
+         >
+
+            <Paper elevation={3} sx={{
+               p: '3rem',
+               borderRadius: '1rem',
+
+            }}>
+
+               <Typography variant='h5' fontWeight='600' textAlign='center' mt='-1.5rem' mb='1rem'> Customer Survey</Typography>
+               <TextField id="standard-basic" placeholder='Name' variant="standard" sx={{ mx: 'auto' }} />
+
+            </Paper>
+         </Box>
+
+         {/* <Question total={questions?.length} setPage={setPage} ques={questions[page]} page={page} /> */}
       </Stack>
    );
 };
