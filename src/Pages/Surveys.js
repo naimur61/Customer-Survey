@@ -1,10 +1,13 @@
 import { Stack } from '@mui/material';
 import React from 'react';
+import Question from './Shared/Question';
 
 const Surveys = () => {
    return (
       <Stack direction='column' justifyContent='center' alignItems='center' height='80vh'>
-
+         {
+            questions.map((q, i) => <Question key={i} q={q} i={i} questions={questions} />)
+         }
 
       </Stack>
    );
