@@ -23,7 +23,7 @@ const Home = () => {
          <Typography variant='h6' color='GrayText' fontWeight='600' mt='1rem' mb='7rem'>
             It will take 5 mounties!
          </Typography>
-         <Button variant="contained" endIcon={<EastIcon />} onClick={() => navigate('/surveys')}>
+         <Button variant="contained" endIcon={<EastIcon />} onClick={() => navigate('/welcome')}>
             Start
          </Button>
       </Stack>
