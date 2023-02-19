@@ -55,6 +55,7 @@ const Question = ({ total, ques, setPage, page, name }) => {
       const string = JSON.stringify(newServery)
       localStorage.setItem('surveyDetails', string)
       handleClose();
+      navigate('/welcome')
    }
 
 
@@ -140,7 +141,7 @@ const Question = ({ total, ques, setPage, page, name }) => {
 
 
                <Typography id="modal-modal-description" sx={{ mt: '2rem' }}>
-                  Save your survey ?
+                  Submit your survey ?
                </Typography>
 
                <Stack justifyContent='end' alignItems='end' mt='2rem'><Button variant="contained" onClick={confirm}> Confirm</Button></Stack>
