@@ -1,45 +1,55 @@
-import { Paper, Stack, TextField, Typography } from '@mui/material';
+import { Button, Paper, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import Question from './Shared/Question';
+import EastIcon from '@mui/icons-material/East';
+
 
 const Surveys = () => {
    const [page, setPage] = useState(0);
+   const [status, setStatus] = useState(false);
+   const [name, setName] = useState({});
 
-
+   const submitName = () => {
+      const nameInput = document.getElementById('name-input');
+      const name = nameInput.value;
+      setName(name)
+      setStatus(true)
+   }
 
    return (
 
       <Stack direction='column' justifyContent='center' alignItems='center' height='80vh'>
+         {!status ?
+            <Box
+               sx={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  '& > :not(style)': {
+                     m: 1,
+                     width: { xs: '15rem', md: '30rem' },
+                     height: '15rem',
 
+                  },
+                  wordWrap: 'break-word'
+               }}
+            >
+               <Paper elevation={3} sx={{
+                  p: '3rem',
+                  borderRadius: '1rem',
 
-         <Box
-            sx={{
-               display: 'flex',
-               flexWrap: 'wrap',
-               '& > :not(style)': {
-                  m: 1,
-                  width: { xs: '15rem', md: '30rem' },
-                  height: '15rem',
+               }}>
+                  <Typography variant='h5' fontWeight='600' textAlign='center' mt='-1.5rem' mb='5rem'> Customer Survey</Typography>
 
-               },
-               wordWrap: 'break-word'
-            }}
-         >
+                  <label>Enter your Name</label>
+                  <TextField id="name-input" placeholder='Name' variant="standard" fullWidth name='names' />
+                  <Button variant="contained" endIcon={<EastIcon />} onClick={() => submitName()} sx={{ mt: "3rem", float: 'right' }}>Next</Button>
+               </Paper>
+            </Box>
+            :
+            <Question total={questions?.length} setPage={setPage} ques={questions[page]} page={page} name={name} />
 
-            <Paper elevation={3} sx={{
-               p: '3rem',
-               borderRadius: '1rem',
-
-            }}>
-
-               <Typography variant='h5' fontWeight='600' textAlign='center' mt='-1.5rem' mb='1rem'> Customer Survey</Typography>
-               <TextField id="standard-basic" placeholder='Name' variant="standard" sx={{ mx: 'auto' }} />
-
-            </Paper>
-         </Box>
-
-         {/* <Question total={questions?.length} setPage={setPage} ques={questions[page]} page={page} /> */}
+         }
       </Stack>
    );
 };

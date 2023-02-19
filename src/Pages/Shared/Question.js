@@ -2,13 +2,13 @@ import { Button, Paper, Stack, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import EastIcon from '@mui/icons-material/East';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import WestIcon from '@mui/icons-material/West';
 import Rating from '@mui/material/Rating';
 
 
 
-const Question = ({ total, ques, setPage, page }) => {
+const Question = ({ total, ques, setPage, page, name }) => {
 
    const [value, setValue] = React.useState(2);
    const navigate = useNavigate();
@@ -34,9 +34,11 @@ const Question = ({ total, ques, setPage, page }) => {
 
 
    const submit = () => {
-      const newSurvey = setAnswer();
-      const string = JSON.stringify(newSurvey)
-      localStorage.setItem('survey', string)
+      const surveys = setAnswer();
+      const newServery = { flag: "COMPLETED", name, surveys };
+
+      const string = JSON.stringify(newServery)
+      localStorage.setItem('surveyDetails', string)
    }
 
 
