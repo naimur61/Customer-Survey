@@ -3,12 +3,14 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import Question from './Shared/Question';
 import EastIcon from '@mui/icons-material/East';
+import axios from 'axios';
 
 
 const Surveys = () => {
    const [page, setPage] = useState(0);
    const [status, setStatus] = useState(false);
    const [name, setName] = useState({});
+   const [questions, setQuestions] = useState();
 
    const submitName = () => {
       const nameInput = document.getElementById('name-input');
@@ -16,6 +18,15 @@ const Surveys = () => {
       setName(name)
       setStatus(true)
    }
+
+   axios.get('https://survey-server-one.vercel.app/question')
+      .then(response => {
+         setQuestions(response.data);
+      })
+      .catch(error => {
+         console.log(error);
+      });
+
 
    return (
 
@@ -57,25 +68,25 @@ const Surveys = () => {
 export default Surveys;
 
 
-const questions = [
-   {
-      "type": "Rating",
-      "question": "How satisfied are you with our products? "
-   },
-   {
-      "type": "Rating",
-      "question": "How fair are the prices compared to similar retailers?"
-   },
-   {
-      "type": "Rating",
-      "question": "How satisfied are you with the value for money of your purchase?"
-   },
-   {
-      "type": "Rating",
-      "question": "On a scale of 1-10 how would you recommend us to your friends and family?"
-   },
-   {
-      "type": "Text",
-      "question": "What could we do to improve our service?"
-   },
-]
+// const questions = [
+//    {
+//       "type": "Rating",
+//       "question": "How satisfied are you with our products? "
+//    },
+//    {
+//       "type": "Rating",
+//       "question": "How fair are the prices compared to similar retailers?"
+//    },
+//    {
+//       "type": "Rating",
+//       "question": "How satisfied are you with the value for money of your purchase?"
+//    },
+//    {
+//       "type": "Rating",
+//       "question": "On a scale of 1-10 how would you recommend us to your friends and family?"
+//    },
+//    {
+//       "type": "Text",
+//       "question": "What could we do to improve our service?"
+//    },
+// ]

@@ -1,4 +1,4 @@
-import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
+import { Button, Modal, Paper, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import EastIcon from '@mui/icons-material/East';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import WestIcon from '@mui/icons-material/West';
 import Rating from '@mui/material/Rating';
 import HelpIcon from '@mui/icons-material/Help';
+import axios from 'axios';
 
 
 const style = {
@@ -29,14 +30,15 @@ const Question = ({ total, ques, setPage, page, name }) => {
    const [open, setOpen] = React.useState(false);
    const handleOpen = () => setOpen(true);
    const handleClose = () => setOpen(false);
+   const [text, setText] = useState('')
 
 
    const type = ques?.type;
    const question = ques?.question;
 
    const setAnswer = () => {
-      const ans = value;
-      const newObj = [...survey, { type, question, ans }]
+      const ans = (ques?.type === 'Rating') ? value : text;
+      const newObj = [...survey, { type, q_Id: ques?._id, question, ans }]
       setSurvey(newObj)
       return newObj;
    }
@@ -47,15 +49,22 @@ const Question = ({ total, ques, setPage, page, name }) => {
       setPage(page + 1);
    }
 
-
    const confirm = () => {
       const surveys = setAnswer();
       const newServery = { flag: "COMPLETED", name, surveys };
-
       const string = JSON.stringify(newServery)
       localStorage.setItem('surveyDetails', string)
-      handleClose();
-      navigate('/welcome')
+
+      axios.post('https://survey-server-one.vercel.app/survey', newServery)
+         .then(response => {
+            if (response.data.acknowledged === true) {
+               handleClose();
+               navigate('/welcome')
+            }
+         })
+         .catch(error => {
+            console.log(error);
+         });
    }
 
 
@@ -99,16 +108,23 @@ const Question = ({ total, ques, setPage, page, name }) => {
                </Stack>
 
                {/* Ratting  */}
-               <Box ml='2.4rem'>
-                  <Rating
-                     name="simple-controlled"
-                     value={value}
-                     onChange={(event, newValue) => {
-                        setValue(newValue);
-                     }}
-                  />
-                  {value}
-               </Box>
+               {
+                  (ques?.type === 'Rating') ?
+
+                     <Box ml='2.4rem'>
+                        <Rating
+                           name="simple-controlled"
+                           value={value}
+                           onChange={(event, newValue) => {
+                              setValue(newValue);
+                           }}
+                        />
+                     </Box>
+                     :
+                     <TextField id="name-input" placeholder='Name' variant="standard" fullWidth name='names' onChange={(e) => {
+                        setText(e.target.value)
+                     }} />
+               }
 
                {/* Buttons  */}
                <Stack direction='row' spacing={3} mt='2.5rem' justifyContent='space-between'>
